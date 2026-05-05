@@ -15,6 +15,26 @@ git clone https://github.com/91wan/mac-cleanup "${CODEX_HOME:-$HOME/.codex}/skil
 
 Restart Codex if the skill does not appear immediately.
 
+### Claude Code
+
+Clone the repository anywhere you keep shared instructions, then point Claude Code at the repository path or ask it to read `CLAUDE.md`:
+
+```bash
+git clone https://github.com/91wan/mac-cleanup "$HOME/Skills/mac-cleanup"
+```
+
+Claude Code does not use `agents/openai.yaml`; it should treat `CLAUDE.md`, `SKILL.md`, and `references/` as Markdown instructions.
+
+### OpenClaw and generic agents
+
+Clone the repository and instruct the agent to read `AGENTS.md` first:
+
+```bash
+git clone https://github.com/91wan/mac-cleanup "$HOME/Skills/mac-cleanup"
+```
+
+OpenClaw and generic agents should treat this repository as Markdown guidance. It is not an OpenClaw-native plugin package.
+
 ## Use
 
 Invoke the skill by name or with natural language:
@@ -46,6 +66,8 @@ Explicit mode requests go directly to that mode:
 ## Supported Project Type
 
 This repository is a `codex-skill` project. The repository root is the skill root.
+
+Other agents can consume the Markdown files, but the repository does not claim native Claude Code or OpenClaw package format support.
 
 ## Safety Model
 
@@ -81,6 +103,8 @@ python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-creator/scripts/quick_
 The repository root is the skill root. Required files are:
 
 - `SKILL.md`
+- `AGENTS.md`
+- `CLAUDE.md`
 - `agents/openai.yaml`
 - `references/maintenance-principles.md`
 - `references/openclaw-cleanup.md`
@@ -125,6 +149,26 @@ git clone https://github.com/91wan/mac-cleanup "${CODEX_HOME:-$HOME/.codex}/skil
 
 如果 Codex 没有立即识别这个 skill，重启 Codex。
 
+### Claude Code
+
+把仓库克隆到你存放共享指令的位置，然后让 Claude Code 读取仓库路径或直接读取 `CLAUDE.md`：
+
+```bash
+git clone https://github.com/91wan/mac-cleanup "$HOME/Skills/mac-cleanup"
+```
+
+Claude Code 不会使用 `agents/openai.yaml`；它应该把 `CLAUDE.md`、`SKILL.md` 和 `references/` 当作 Markdown 指令使用。
+
+### OpenClaw 和通用 agent
+
+克隆仓库后，让 agent 先读取 `AGENTS.md`：
+
+```bash
+git clone https://github.com/91wan/mac-cleanup "$HOME/Skills/mac-cleanup"
+```
+
+OpenClaw 和通用 agent 应把这个仓库视为 Markdown 指令包。它不是 OpenClaw 原生 plugin 包。
+
 ## 使用
 
 可以用 skill 名或自然语言触发：
@@ -156,6 +200,8 @@ $mac-cleanup
 ## 支持的项目类型
 
 这个仓库是 `codex-skill` 项目。仓库根目录就是 skill 根目录。
+
+其他 agent 可以读取 Markdown 文件使用，但这个仓库不声明自己是 Claude Code 或 OpenClaw 的原生包格式。
 
 ## 安全模型
 
@@ -191,6 +237,8 @@ python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-creator/scripts/quick_
 必需文件：
 
 - `SKILL.md`
+- `AGENTS.md`
+- `CLAUDE.md`
 - `agents/openai.yaml`
 - `references/maintenance-principles.md`
 - `references/openclaw-cleanup.md`
