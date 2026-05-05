@@ -1,5 +1,5 @@
 ---
-name: "mac-cleanup"
+name: mac-cleanup
 description: "Use when the user wants practical macOS disk cleanup, asks to clean Mac junk such as '帮我清Mac垃圾' or '清理 Mac 垃圾', invokes @mac-cleanup or $mac-cleanup, asks for Mole-assisted cleanup, asks to clean OpenClaw junk, or wants exact-folder triage in Downloads or Movies. Supports three modes: 1 dry-run plus deletion advice, 2 direct conservative cleanup, and 3 Downloads-only triage. Ambiguous activation must show the three-option menu first; explicit mode requests go directly to that mode. Inspect real machine state, preview before destructive commands, back up stateful agent data, avoid blind scans, and verify freed space after changes."
 ---
 
