@@ -1,0 +1,7 @@
+interface:
+  display_name: "Mac Cleanup"
+  short_description: "Conservative Mac, Downloads, and OpenClaw cleanup"
+  default_prompt: "Use $mac-cleanup to show the cleanup menu, or choose mode 1 for dry-run advice, mode 2 for direct conservative cleanup, or mode 3 for Downloads triage."
+
+policy:
+  allow_implicit_invocation: true
