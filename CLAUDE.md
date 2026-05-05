@@ -16,3 +16,13 @@ Use this repository as a Markdown instruction pack for Mac cleanup work.
 - Do not run destructive cleanup until the selected mode allows it.
 - For ambiguous requests such as `帮我清Mac垃圾`, show the three-option menu from `SKILL.md` first.
 - For OpenClaw state, prefer dry-run and backup before changing anything.
+
+## Public Release Gate
+
+Before public GitHub push, tag, release, or asset upload, run:
+
+```bash
+python3 "${CODEX_HOME:-$HOME/.codex}/skills/shipgate/scripts/shipgate.py" check . --project-type codex-skill --report-md build/shipgate/report.md --report-json build/shipgate/report.json
+```
+
+Stop on any ShipGate `fail` status. Public release README docs must be split pages: `README.md` for English and `README_ZH.md` for Chinese, with reciprocal top links.

@@ -17,6 +17,13 @@ This repository is a Codex skill first, but the Markdown instructions can be use
 - Do not mutate running app, gateway, browser-profile, agent, workspace, memory, config, plugin, backup, or session state.
 - Verify every destructive cleanup with `df -h` and targeted `du -sh`.
 
+## Public Release Gate
+
+- Before public GitHub push, tag, release, or asset upload, run ShipGate from `${CODEX_HOME:-$HOME/.codex}/skills/shipgate/scripts/shipgate.py`.
+- Treat any ShipGate `fail` status as a hard stop.
+- Public release README docs must be split pages: `README.md` for English and `README_ZH.md` for Chinese, with reciprocal top links.
+- Do not accept a single mixed-language README for public GitHub release.
+
 ## Platform Notes
 
 - Codex can discover this repository as a native skill through `SKILL.md` and `agents/openai.yaml`.
