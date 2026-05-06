@@ -92,6 +92,22 @@ openclaw uninstall --dry-run --workspace --state --service --non-interactive --y
 
 涉及状态变更前，skill 会建议 `openclaw backup create`。除非用户明确要求重置或卸载 OpenClaw，否则不会运行真正的 reset 或 uninstall。
 
+## Mole 辅助清理
+
+Mole 支持是可选能力。这个 skill 不会自动安装 Mole，也不会复制 Mole 脚本。
+
+如果本机有 Mole，skill 会先使用预览命令：
+
+```bash
+command -v mo
+mo --version
+mo clean --dry-run --debug
+mo installer --dry-run
+mo purge --dry-run
+```
+
+`mo clean` 是预览后的常规低风险 Mole 路径。`mo installer`、`mo purge`、`mo optimize`、`mo uninstall`、`mo remove`、`mo touchid` 和 `mo completion` 都需要用户明确授权。
+
 ## 验证
 
 如果本机安装了 Codex 的 `skill-creator` skill，可以验证目录：
@@ -110,6 +126,7 @@ python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-creator/scripts/quick_
 - `agents/openai.yaml`
 - `references/maintenance-principles.md`
 - `references/openclaw-cleanup.md`
+- `references/mole-integration.md`
 - `LICENSE`
 
 ## GitHub 发布流程
@@ -137,4 +154,3 @@ git remote -v
 ```bash
 python3 "${CODEX_HOME:-$HOME/.codex}/skills/shipgate/scripts/shipgate.py" check . --project-type codex-skill --asset dist/file.zip --report-md build/shipgate/report.md --report-json build/shipgate/report.json
 ```
-

@@ -33,3 +33,7 @@ Allowed while running:
 - clearly separate low-risk caches when the app does not depend on them live
 
 Require explicit user approval or a stopped service before changing state, workspace, memory, config, profile, plugin, backup, or session directories.
+
+## Third-party cleanup tools
+
+Treat cleanup tools such as Mole as helpers, not authority. Tool output is evidence, not permission. Review dry-run output and logs before deletion, keep the normal risk tiers, and do not let a tool broaden cleanup scope beyond what the user selected.

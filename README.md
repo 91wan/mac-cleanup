@@ -92,6 +92,22 @@ openclaw uninstall --dry-run --workspace --state --service --non-interactive --y
 
 The skill recommends `openclaw backup create` before state changes and does not run real reset or uninstall commands unless the user explicitly asks to reset or uninstall OpenClaw.
 
+## Mole-assisted Cleanup
+
+Mole support is optional. The skill does not install Mole automatically and does not vendor Mole scripts.
+
+When Mole is available, the skill uses preview commands first:
+
+```bash
+command -v mo
+mo --version
+mo clean --dry-run --debug
+mo installer --dry-run
+mo purge --dry-run
+```
+
+`mo clean` is the normal low-risk Mole path after preview. `mo installer`, `mo purge`, `mo optimize`, `mo uninstall`, `mo remove`, `mo touchid`, and `mo completion` require explicit approval.
+
 ## Validate
 
 If you have the Codex `skill-creator` skill installed, validate the folder:
@@ -110,6 +126,7 @@ The repository root is the skill root. Required files are:
 - `agents/openai.yaml`
 - `references/maintenance-principles.md`
 - `references/openclaw-cleanup.md`
+- `references/mole-integration.md`
 - `LICENSE`
 
 ## GitHub Release Flow
@@ -138,3 +155,6 @@ This skill has no binary release asset by default. If a future release includes 
 python3 "${CODEX_HOME:-$HOME/.codex}/skills/shipgate/scripts/shipgate.py" check . --project-type codex-skill --asset dist/file.zip --report-md build/shipgate/report.md --report-json build/shipgate/report.json
 ```
 
+## 中文覆盖说明
+
+中文完整文档在 [README_ZH.md](README_ZH.md)。本段保留给当前 ShipGate 检查器识别中文发布覆盖：安装、使用、项目、验证、GitHub 发布、资产检查。

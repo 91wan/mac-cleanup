@@ -7,6 +7,7 @@ This repository is a Codex skill first, but the Markdown instructions can be use
 - Use `SKILL.md` as the only behavior source.
 - Use `references/maintenance-principles.md` before touching Codex, OpenClaw, app state, workspaces, sessions, logs, or backups.
 - Use `references/openclaw-cleanup.md` for any OpenClaw cleanup request.
+- Use `references/mole-integration.md` when the user mentions Mole, `mo`, or Mole-assisted cleanup.
 
 ## Required Behavior
 
@@ -14,6 +15,7 @@ This repository is a Codex skill first, but the Markdown instructions can be use
 - Explicit `1`, `2`, `3`, or equivalent mode wording must enter that mode directly.
 - Report before changing files.
 - Back up or recommend backup before touching stateful agent data.
+- For Mole work, detect `mo` locally, run preview commands first, and require explicit approval for uninstall, purge, optimize, remove, touchid, or completion actions.
 - Do not mutate running app, gateway, browser-profile, agent, workspace, memory, config, plugin, backup, or session state.
 - Verify every destructive cleanup with `df -h` and targeted `du -sh`.
 

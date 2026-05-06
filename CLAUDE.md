@@ -8,6 +8,7 @@ Use this repository as a Markdown instruction pack for Mac cleanup work.
 2. Follow the activation and mode rules exactly.
 3. Read `references/maintenance-principles.md` before touching stateful agent data.
 4. Read `references/openclaw-cleanup.md` for OpenClaw cleanup requests.
+5. Read `references/mole-integration.md` when the user mentions Mole, `mo`, or Mole-assisted cleanup.
 
 ## Important Boundaries
 
@@ -16,6 +17,7 @@ Use this repository as a Markdown instruction pack for Mac cleanup work.
 - Do not run destructive cleanup until the selected mode allows it.
 - For ambiguous requests such as `帮我清Mac垃圾`, show the three-option menu from `SKILL.md` first.
 - For OpenClaw state, prefer dry-run and backup before changing anything.
+- For Mole work, detect `mo` locally, run preview commands first, and require explicit approval for uninstall, purge, optimize, remove, touchid, or completion actions.
 
 ## Public Release Gate
 

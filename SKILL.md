@@ -66,11 +66,10 @@ When the user asks to clean OpenClaw junk without a mode, enter mode `1` with th
 
 Use this when the user mentions Mole or Mole is the selected tool:
 
-- Confirm available commands and destructive flags from local help or repo docs.
-- Run `mo clean --dry-run` before `mo clean`.
-- Run `mo installer --dry-run` and `mo purge --dry-run` before recommending those paths.
-- Treat `clean`, `uninstall`, `purge`, `installer`, and `remove` as destructive.
-- Do not jump to app uninstall or broad purge when cache cleanup solves the pressure.
+- Read [mole-integration.md](references/mole-integration.md) before recommending or running Mole commands.
+- Mole is optional. Detect `mo` locally and do not auto-install it.
+- Always run Mole preview commands before real cleanup.
+- Do not jump to app uninstall, broad project purge, or system optimization when cache cleanup solves the pressure.
 
 ## User Content
 
@@ -89,6 +88,9 @@ Use these patterns as defaults:
 - `du -sh "$HOME/Library/Caches" "$HOME/Downloads" "$HOME/Movies" "$HOME/.Trash" 2>/dev/null`
 - `du -sh "$HOME/Downloads"/* 2>/dev/null | sort -hr | head -n 20`
 - `du -sh "$HOME/.openclaw" "$HOME/.openclaw"/* 2>/dev/null | sort -hr | head -n 30`
+- `mo clean --dry-run --debug`
+- `mo installer --dry-run`
+- `mo purge --dry-run`
 - `openclaw reset --dry-run --scope full --non-interactive --yes`
 - `openclaw uninstall --dry-run --workspace --state --service --non-interactive --yes`
 
