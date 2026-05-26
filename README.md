@@ -45,6 +45,10 @@ $mac-cleanup
 帮我清Mac垃圾
 清理 Mac 垃圾
 清 OpenClaw 垃圾
+clean up my mac
+free up disk space
+mac is full
+clear caches
 ```
 
 Ambiguous activation shows this menu first:
@@ -79,6 +83,8 @@ The skill follows four maintenance gates:
 - If running, do not mutate: avoid changing live app, gateway, browser-profile, agent, or workspace state.
 
 Low-risk cleanup is limited to caches, logs, trash, package-manager caches, and clearly regenerable temporary data. User files, app state, project artifacts, credentials, memory, config, plugins, backups, and ambiguous folders require explicit scope.
+
+The per-ecosystem cleanup catalogue lives in [references/dev-bucket-paths.md](references/dev-bucket-paths.md) and covers Xcode, Homebrew, npm/pnpm/yarn/bun, pip/uv/poetry/conda, cargo/rustup, Go, gem/bundler, Maven, Gradle, Android, Nix, Docker BuildX / OrbStack, browsers, heavy native apps (Spotify, Slack, Telegram, WeChat, Discord), system temp, and APFS state (local snapshots, sleep image). Inspection commands live in [references/inspection-commands.md](references/inspection-commands.md).
 
 ## OpenClaw Cleanup
 
@@ -124,6 +130,8 @@ The repository root is the skill root. Required files are:
 - `AGENTS.md`
 - `CLAUDE.md`
 - `agents/openai.yaml`
+- `references/inspection-commands.md`
+- `references/dev-bucket-paths.md`
 - `references/maintenance-principles.md`
 - `references/openclaw-cleanup.md`
 - `references/mole-integration.md`

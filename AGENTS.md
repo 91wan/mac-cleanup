@@ -5,6 +5,8 @@ This repository is a Codex skill first, but the Markdown instructions can be use
 ## Source of Truth
 
 - Use `SKILL.md` as the only behavior source.
+- Use `references/inspection-commands.md` for read-only probes and hardening rules.
+- Use `references/dev-bucket-paths.md` as the per-ecosystem cleanup catalogue (paths and risk tier).
 - Use `references/maintenance-principles.md` before touching Codex, OpenClaw, app state, workspaces, sessions, logs, or backups.
 - Use `references/openclaw-cleanup.md` for any OpenClaw cleanup request.
 - Use `references/mole-integration.md` when the user mentions Mole, `mo`, or Mole-assisted cleanup.

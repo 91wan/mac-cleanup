@@ -1,11 +1,11 @@
 ---
 name: mac-cleanup
-description: "Use when the user wants practical macOS disk cleanup, asks to clean Mac junk such as '帮我清Mac垃圾' or '清理 Mac 垃圾', invokes @mac-cleanup or $mac-cleanup, asks for Mole-assisted cleanup, asks to clean OpenClaw junk, or wants exact-folder triage in Downloads or Movies. Supports three modes: 1 dry-run plus deletion advice, 2 direct conservative cleanup, and 3 Downloads-only triage. Ambiguous activation must show the three-option menu first; explicit mode requests go directly to that mode. Inspect real machine state, preview before destructive commands, back up stateful agent data, avoid blind scans, and verify freed space after changes."
+description: "Use when the user wants macOS disk cleanup: free disk space, clean Mac caches or junk, Downloads triage, Mole-assisted cleanup, or OpenClaw local-state cleanup. Activates on @mac-cleanup, $mac-cleanup, 帮我清Mac垃圾, 清理 Mac 垃圾, 清 OpenClaw 垃圾, 'clean up my mac', 'free up disk space', 'mac is full', 'clear caches', 'disk full', 'reclaim space'. Three modes: 1 dry-run + advice, 2 conservative cleanup, 3 Downloads triage. Ambiguous input shows the menu first; explicit mode wording enters that mode directly. Inspect real machine state, preview before destructive commands, back up stateful agent data, never blind-scan $HOME, and verify with df/du after every change."
 ---
 
 # Mac Cleanup
 
-Perform conservative macOS cleanup from real machine facts. Keep the skill compact: inspect first, preview or back up when state matters, delete only low-risk targets automatically, and verify after every mutation.
+Perform conservative macOS cleanup from real machine facts. Inspect first, preview or back up when state matters, delete only low-risk targets automatically, and verify after every mutation.
 
 ## Activation
 
@@ -16,6 +16,11 @@ Soft-support these invocations:
 - `帮我清Mac垃圾`
 - `清理 Mac 垃圾`
 - `清 OpenClaw 垃圾`
+- `clean up my mac`
+- `free up disk space`
+- `mac is full`
+- `clear caches`
+- `reclaim disk space`
 
 For ambiguous activation, the first response must show this menu and stop:
 
@@ -23,83 +28,71 @@ For ambiguous activation, the first response must show this menu and stop:
 2. `直接帮我清理 Mac`
 3. `看看 Downloads 还能清什么`
 
-Ambiguous activation includes only naming the skill, `@mac-cleanup`, `$mac-cleanup`, `帮我清Mac垃圾`, or `清理 Mac 垃圾` without a mode.
+Ambiguous activation includes only naming the skill, `@mac-cleanup`, `$mac-cleanup`, any Chinese trigger, or any English short trigger without a mode.
 
-Skip the menu and enter the mode directly when the user clearly says `1`, `2`, `3`, `dry-run`, `直接帮我清理 Mac`, `直接清理`, `直接删`, `看看 Downloads`, or equivalent.
+Skip the menu and enter the mode directly when the user clearly says `1`, `2`, `3`, `dry-run`, `直接帮我清理 Mac`, `直接清理`, `直接删`, `看看 Downloads`, or any equivalent in either language.
 
 When the user asks to clean OpenClaw junk without a mode, enter mode `1` with the OpenClaw rules from [openclaw-cleanup.md](references/openclaw-cleanup.md).
 
 ## Modes
 
-1. `dry-run + deletion advice`
-   - Inspect and preview only. Do not delete.
-   - Report reclaimable space, low-risk opportunities, and concrete next choices.
-2. `direct cleanup`
-   - Inspect first, then delete only low-risk targets automatically.
-   - User-owned content, app state, agent state, and uninstall/reset actions require explicit scope.
-3. `Downloads triage`
-   - Inspect `~/Downloads` only.
-   - Rank immediate children by size and propose narrowly scoped deletes.
+1. `dry-run + deletion advice` — Inspect and preview only. Do not delete. Report reclaimable space, low-risk opportunities, and concrete next choices.
+2. `direct cleanup` — Inspect first, then delete only low-risk targets automatically. User-owned content, app state, agent state, and uninstall/reset actions require explicit scope.
+3. `Downloads triage` — Inspect `~/Downloads` only. Rank immediate children by size and propose narrowly scoped deletes.
 
 ## Safety Rules
 
 - Read [maintenance-principles.md](references/maintenance-principles.md) before touching Codex, OpenClaw, app state, workspaces, sessions, logs, or backups.
 - Separate risk levels:
-  - Low risk: caches, logs, trash, browser leftovers, package-manager caches, orphaned app leftovers, and aged backup folders with a clear retention rule.
-  - Explicit approval required: `~/Downloads`, `~/Movies`, installers, app backups, project artifacts, app uninstall, media folders, business documents, and OpenClaw non-cache state.
-  - Do not auto-delete: active project directories, business materials, installed apps, credentials, memory, plugins, config, backups, and ambiguous folders.
-- Prefer exact directory coordinates over discovery sweeps. Do not run blind `find` scans across `$HOME` or large trees.
-- If a target tool or app is running, report and preview first. Do not mutate its state directories until the user closes it or explicitly accepts the limited low-risk cleanup path.
+  - Low risk: caches, logs, trash, browser cache shards, package-manager caches, orphaned app leftovers, and aged backup folders with a clear retention rule.
+  - Explicit approval required: `~/Downloads`, `~/Movies`, installers, app backups, project artifacts, app uninstall, media folders, business documents, OpenClaw non-cache state, Maven repository, Docker / OrbStack daemon-managed data, APFS local snapshots, sleep image, Nix garbage collection.
+  - Do not auto-delete: active project directories, business materials, installed apps, credentials, memory, plugins, config, backups, ambiguous folders, swap files in `/private/var/vm`.
+- Prefer exact directory coordinates from [dev-bucket-paths.md](references/dev-bucket-paths.md) over discovery sweeps. Do not run blind `find` scans across `$HOME` or large trees.
+- If a target tool or app is running, report and preview first. Before mutating its state directories the user must close it or explicitly accept a clearly separated low-risk cache path. Check at least: Xcode, Gradle daemon, Docker / OrbStack, Chrome / browsers, and any named gateway or agent. Probes are in [inspection-commands.md](references/inspection-commands.md).
 - Every destructive step must be followed by `df -h` plus targeted `du -sh` verification.
+
+## Inspection Buckets
+
+Walk these in order of payoff and trust. Full path lists, run rules, and clean commands live in [dev-bucket-paths.md](references/dev-bucket-paths.md). Stable read-only commands live in [inspection-commands.md](references/inspection-commands.md).
+
+1. Pressure — `df`, APFS purgeable space, local snapshots, sleep image, swap, hibernate mode.
+2. User caches and logs — `~/Library/Caches`, `~/Library/Logs`, `~/Library/Application Support` heavy hitters (Spotify, Slack, Telegram, WeChat, Discord, Dropbox, etc.).
+3. Browser leftovers — Chrome, Safari, Firefox, Edge, Brave caches and Service Worker stores. Preserve PWAs the user actually runs.
+4. Developer toolchains — Xcode DerivedData / Archives / iOS DeviceSupport / CoreSimulator / Documentation cache, Homebrew, npm / pnpm / yarn / bun / corepack, pip / uv / poetry / conda / pyenv, cargo / rustup, go cache, gem / bundler, gradle, maven, Nix, Docker buildx, OrbStack data, cloud CLIs, ML caches (HF / torch / TF / wandb).
+5. System temp — `/private/var/folders/<hash>/<hash>/C` rebuildable caches (stale > 1 day), `/Library/Caches` rotatable items. Sudo required; never auto.
+6. Trash and orphans — `~/.Trash`. Report-only on `/Volumes/*/.Trashes` and orphaned app support folders aged past 30 days.
+7. User content — `~/Downloads`, `~/Movies`, aged installer / backup folders. Never wholesale.
+8. Optional helpers — Mole ([mole-integration.md](references/mole-integration.md)) and OpenClaw ([openclaw-cleanup.md](references/openclaw-cleanup.md)).
 
 ## Default Workflow
 
 1. Resolve the mode or show the menu.
-2. Check pressure with `df -h /System/Volumes/Data /`.
-3. Inspect obvious buckets: `~/Library/Caches`, `~/Downloads`, `~/Movies`, `~/.Trash`, and any explicitly named tool state.
-4. For mode `1`, stop after preview and advice.
-5. For mode `2`, delete only low-risk targets, then verify.
+2. Run the pressure block from [inspection-commands.md](references/inspection-commands.md).
+3. Walk the inspection buckets above. Stop once there is enough evidence to recommend.
+4. For mode `1`, stop after preview and report through the Output Contract.
+5. For mode `2`, delete only low-risk targets from [dev-bucket-paths.md](references/dev-bucket-paths.md), then verify with `df -h` and targeted `du -sh`.
 6. For mode `3`, inspect only `~/Downloads` immediate children and propose concrete deletions.
-7. For OpenClaw, apply [openclaw-cleanup.md](references/openclaw-cleanup.md) and prefer `openclaw backup create` plus dry-run reset/uninstall checks before any state-changing action.
-
-## Mole Procedure
-
-Use this when the user mentions Mole or Mole is the selected tool:
-
-- Read [mole-integration.md](references/mole-integration.md) before recommending or running Mole commands.
-- Mole is optional. Detect `mo` locally and do not auto-install it.
-- Always run Mole preview commands before real cleanup.
-- Do not jump to app uninstall, broad project purge, or system optimization when cache cleanup solves the pressure.
+7. For OpenClaw, apply [openclaw-cleanup.md](references/openclaw-cleanup.md) and prefer `openclaw backup create` plus dry-run reset / uninstall checks before any state-changing action.
+8. For Mole, follow [mole-integration.md](references/mole-integration.md).
 
 ## User Content
 
-For `~/Downloads`, `~/Movies`, and similar folders:
+For `~/Downloads`, `~/Movies`, `~/Desktop`, and similar folders:
 
 - Never delete the top-level folder wholesale.
 - Break down immediate children with exact paths, rank by size, and work one exposed directory at a time.
-- Prefer targets whose names imply temporary or regenerable content, such as `临时归档`, installer packages, exported caches, app backup directories, duplicate zip/extracted pairs, and render caches.
+- Prefer targets whose names imply temporary or regenerable content: `临时归档`, `*.dmg`, `*.pkg`, installer packages, exported caches, app backup directories, duplicate zip and extracted pairs, render caches, dated archive folders.
 - For backup rotation, keep a clear retention policy such as the most recent 30 days.
-
-## Command Patterns
-
-Use these patterns as defaults:
-
-- `df -h /System/Volumes/Data /`
-- `du -sh "$HOME/Library/Caches" "$HOME/Downloads" "$HOME/Movies" "$HOME/.Trash" 2>/dev/null`
-- `du -sh "$HOME/Downloads"/* 2>/dev/null | sort -hr | head -n 20`
-- `du -sh "$HOME/.openclaw" "$HOME/.openclaw"/* 2>/dev/null | sort -hr | head -n 30`
-- `mo clean --dry-run --debug`
-- `mo installer --dry-run`
-- `mo purge --dry-run`
-- `openclaw reset --dry-run --scope full --non-interactive --yes`
-- `openclaw uninstall --dry-run --workspace --state --service --non-interactive --yes`
 
 ## Output Contract
 
-Report:
+Report each run as Markdown with these sections:
 
-1. Active mode or the three-option menu.
-2. What was inspected.
-3. What was deleted, or `preview only`.
-4. Space recovered and current free space.
-5. The next 1-3 targets, ordered by payoff and risk.
+1. **Mode** — `1`, `2`, `3`, or the three-option menu.
+2. **Pressure** — `df -h` line for the data volume, plus purgeable space and any local snapshot or sleep-image notes.
+3. **Inspected** — bullet list of the buckets walked, each with size and risk tier.
+4. **Acted** — bullet list of what was deleted with exact paths, or `preview only`.
+5. **Recovered** — bytes freed and current free space, or estimated reclaimable space when in mode `1`.
+6. **Next** — 1-3 ordered next targets, each with risk tier and the user approval it needs.
+
+When real bytes are not yet known (mode `1`), use `du -sh` as the reclaimable estimate and label it `estimate`.

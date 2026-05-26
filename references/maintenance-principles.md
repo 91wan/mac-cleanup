@@ -34,6 +34,15 @@ Allowed while running:
 
 Require explicit user approval or a stopped service before changing state, workspace, memory, config, profile, plugin, backup, or session directories.
 
+Process probes to run before any mutating step (full list in [inspection-commands.md](inspection-commands.md)):
+
+- Xcode for `DerivedData`, `Archives`, `DocumentationCache`, simulator data.
+- Gradle daemon for `~/.gradle/caches`.
+- Docker / OrbStack for any container or build cache work.
+- Chrome / Safari / Firefox / Brave / Edge for their cache and Service Worker stores.
+- Node / pnpm / yarn / bun processes for their respective package caches.
+- OpenClaw gateway, browser profile, and node host for `~/.openclaw`.
+
 ## Third-party cleanup tools
 
 Treat cleanup tools such as Mole as helpers, not authority. Tool output is evidence, not permission. Review dry-run output and logs before deletion, keep the normal risk tiers, and do not let a tool broaden cleanup scope beyond what the user selected.

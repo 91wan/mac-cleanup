@@ -6,9 +6,11 @@ Use this repository as a Markdown instruction pack for Mac cleanup work.
 
 1. Read `SKILL.md`.
 2. Follow the activation and mode rules exactly.
-3. Read `references/maintenance-principles.md` before touching stateful agent data.
-4. Read `references/openclaw-cleanup.md` for OpenClaw cleanup requests.
-5. Read `references/mole-integration.md` when the user mentions Mole, `mo`, or Mole-assisted cleanup.
+3. Read `references/inspection-commands.md` for read-only probes (`df`, `du`, APFS snapshots, sleep image, process probes).
+4. Read `references/dev-bucket-paths.md` for the per-ecosystem cleanup catalogue (Xcode, Homebrew, Node, Python, Rust/Go, browsers, heavy native apps, system temp, APFS state).
+5. Read `references/maintenance-principles.md` before touching stateful agent data.
+6. Read `references/openclaw-cleanup.md` for OpenClaw cleanup requests.
+7. Read `references/mole-integration.md` when the user mentions Mole, `mo`, or Mole-assisted cleanup.
 
 ## Important Boundaries
 

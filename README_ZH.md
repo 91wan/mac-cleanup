@@ -45,6 +45,10 @@ $mac-cleanup
 帮我清Mac垃圾
 清理 Mac 垃圾
 清 OpenClaw 垃圾
+clean up my mac
+free up disk space
+mac is full
+clear caches
 ```
 
 模糊触发会先显示三个选项：
@@ -79,6 +83,8 @@ $mac-cleanup
 - 运行中不改状态：目标 app、gateway、浏览器 profile、agent 或 workspace 仍在运行时，不直接修改状态目录。
 
 低风险清理只覆盖缓存、日志、废纸篓、包管理器缓存和明确可再生成的临时数据。用户文件、app 状态、项目产物、凭据、memory、config、plugins、backups 和含糊目录都需要明确授权。
+
+完整的按生态分类的清理目录列表见 [references/dev-bucket-paths.md](references/dev-bucket-paths.md)，覆盖 Xcode、Homebrew、npm/pnpm/yarn/bun、pip/uv/poetry/conda、cargo/rustup、Go、gem/bundler、Maven、Gradle、Android、Nix、Docker BuildX / OrbStack、浏览器、大体积原生 App（Spotify、Slack、Telegram、WeChat、Discord）、系统 temp、APFS 状态（本地快照、sleepimage）。只读探测命令见 [references/inspection-commands.md](references/inspection-commands.md)。
 
 ## OpenClaw 清理
 
@@ -124,6 +130,8 @@ python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-creator/scripts/quick_
 - `AGENTS.md`
 - `CLAUDE.md`
 - `agents/openai.yaml`
+- `references/inspection-commands.md`
+- `references/dev-bucket-paths.md`
 - `references/maintenance-principles.md`
 - `references/openclaw-cleanup.md`
 - `references/mole-integration.md`

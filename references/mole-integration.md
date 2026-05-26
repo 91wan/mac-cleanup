@@ -2,6 +2,8 @@
 
 Use this reference only when the user mentions Mole, `mo`, or asks for Mole-assisted cleanup. Mole is an optional helper, not a required dependency and not the source of cleanup authority.
 
+When Mole is unavailable, address the same buckets directly using [dev-bucket-paths.md](dev-bucket-paths.md). The skill's coverage is independent of Mole; Mole is a convenience layer that bundles preview, whitelisting, and operation logs.
+
 ## Detection
 
 Check local availability before using Mole:
